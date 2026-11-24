@@ -1,0 +1,47 @@
+GEN X EVO
+Automation Engineering & Training
+
+Instructor:
+Rajeshkumar Muthu
+
+Role:
+Senior Automation Test Lead & Mentor
+
+Experience:
+8+ years
+
+Learners Mentored:
+10,000+
+
+Courses:
+
+Selenium:
+- Java
+- C#
+- JavaScript
+- Python
+
+Playwright:
+- All supported languages
+
+API Automation:
+- Java
+- Python
+- C#
+- JavaScript
+- TypeScript
+
+Mobile Automation:
+- Appium with Java
+- Appium with C#
+
+AI & Modern Automation:
+- AI Testing
+- AI-Assisted Testing
+- Building AI Agents
+
+Contact:
+rajesh@genxevo.com
+
+For upcoming course batches, training programs and automation mentoring:
+rajesh@genxevo.com

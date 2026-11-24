@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "productName": "iPhone",
+      "sortOption": "Price -- Low to High",
+      "networkType": "5G"
+    },
+    {
+      "productName": "Samsung",
+      "expectedProductName": "Samsung Galaxy Tab",
+      "category": "Tablets",
+      "displaySize": "8 - 10 inch"
+    },
+    
+    {
+      "productName": "Laptop",
+      "brand": "ASUS",
+      "expectedProductName": "ASUS ExpertBook P3 AI ",
+      "ramCapacity": "64 GB"
+    }
+  ]
+}
