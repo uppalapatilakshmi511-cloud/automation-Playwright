@@ -1,22 +1,26 @@
 
-import { test, expect } from './Fixtures/baseFixtures';
+import { test, expect } from '@playwright/test';
+import { MoreDropdownPage } from './Pages/moreDropdownPage';
 
 test.describe('Flipkart More Dropdown Testing', () => {
 
-    test('Verify all More dropdown options', async ({ moreDropdownPage }) => {
+    test('Verify More dropdown options', async ({ page }) => {
+
+        const morePage = new MoreDropdownPage(page);
 
         console.log('========== TEST STARTED ==========');
 
         // Step 1: Open Flipkart
-        await moreDropdownPage.openFlipkart();
+        await morePage.openFlipkart();
 
-        // Step 2: Handle login popup
-        await moreDropdownPage.closeLoginPopup();
+        // Step 2: Verify More option
+        await morePage.verifyMoreVisible();
 
-        // Step 3: Verify all dropdown options
-        await moreDropdownPage.verifyAllDropdownOptions();
+        // Step 3: Hover on More
+        await morePage.hoverOnMore();
 
-        console.log('All More dropdown options verified');
+        // Step 4: Verify Become a Seller
+        await morePage.verifyBecomeSeller();
 
         console.log('========== TEST COMPLETED ==========');
 

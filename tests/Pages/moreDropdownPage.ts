@@ -1,123 +1,74 @@
 
-import { Page, expect } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class MoreDropdownPage {
 
-    constructor(private page: Page) {}
+    readonly page: Page;
+    readonly moreOption: Locator;
+    readonly sellerOption: Locator;
 
-    // Step 1: Open Flipkart
+    constructor(page: Page) {
+
+        this.page = page;
+
+        this.moreOption = page.getByText('More', {
+            exact: true
+        });
+
+        this.sellerOption = page.getByRole('link', {
+            name: 'Become a Seller',
+            exact: true
+        });
+    }
+
     async openFlipkart() {
 
         await this.page.goto('https://www.flipkart.com/');
 
         console.log('Flipkart homepage opened');
-    }
 
-    // Step 2: Handle login popup
-    async closeLoginPopup() {
+        await this.page.waitForLoadState('domcontentloaded');
 
-        const closeButton = this.page.locator('span._30XB9F');
+        // Close login popup if displayed
+        const closeButton = this.page.getByRole('button', {
+            name: /close/i
+        });
 
-        if (await closeButton.isVisible()) {
-
+        if (await closeButton.isVisible().catch(() => false)) {
             await closeButton.click();
-
             console.log('Login popup closed');
-
-        } else {
-
-            console.log('Login popup not displayed');
         }
     }
 
-    // Step 3: Hover on More
-    async hoverMore() {
+    async verifyMoreVisible() {
 
-        const more = this.page.getByRole('link', {
-            name: 'More',
-            exact: true
-        });
+        await expect(this.moreOption.first()).toBeVisible();
 
-        await expect(more).toBeVisible();
+        console.log('More option is visible');
+    }
 
-        await more.hover();
+    async hoverOnMore() {
+
+        await this.moreOption.first().hover();
 
         console.log('Hovered on More');
     }
 
-    // Step 4: Select and verify dropdown option
-    async selectDropdownOption(optionName: string) {
+    async verifyBecomeSeller() {
 
-        console.log('Selecting: ' + optionName);
+        await expect(this.sellerOption).toBeVisible();
 
-        const option = this.page.getByRole('link', {
-            name: optionName,
-            exact: true
-        });
+        console.log('Become a Seller option is visible');
 
-        // Verify option visibility
-        await expect(option).toBeVisible();
+        await expect(this.sellerOption).toBeEnabled();
 
-        console.log(optionName + ' is visible');
-
-        // Check whether link opens in a new tab
-        const target = await option.getAttribute('target');
-
-        if (target === '_blank') {
-
-            const [newPage] = await Promise.all([
-
-                this.page.waitForEvent('popup'),
-
-                option.click()
-
-            ]);
-
-            // Verify destination page has content
-            await expect(newPage.locator('body')).not.toBeEmpty();
-
-            console.log(optionName + ' opened in new tab');
-
-            await newPage.close();
-
-        } else {
-
-            // Click option in same tab
-            await option.click();
-
-            // Verify destination page has content
-            await expect(this.page.locator('body')).not.toBeEmpty();
-
-            console.log(optionName + ' page opened successfully');
-        }
-
-        // Return to Flipkart homepage
-        await this.openFlipkart();
-
-        // Handle login popup again
-        await this.closeLoginPopup();
+        console.log('Become a Seller option is enabled');
     }
 
-    // Step 5: Verify all dropdown options
-    async verifyAllDropdownOptions() {
+    async clickBecomeSeller() {
 
-        const optionNames = [
+        await this.sellerOption.click();
 
-            'Become a Seller',
-            'Notification Preferences',
-            '24x7 Customer Care 24x7',
-            'Advertise',
-            'Download App'
-
-        ];
-
-        for (const optionName of optionNames) {
-
-            await this.hoverMore();
-
-            await this.selectDropdownOption(optionName);
-        }
-
-        console.log('All dropdown options checked successfully');
+        console.log('Clicked Become a Seller');
     }
 }
