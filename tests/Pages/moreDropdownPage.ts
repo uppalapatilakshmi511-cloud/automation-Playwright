@@ -5,7 +5,7 @@ export class MoreDropdownPage {
 
     readonly page: Page;
     readonly moreOption: Locator;
-    readonly sellerOption: Locator;
+    readonly becomeSeller: Locator;
 
     constructor(page: Page) {
 
@@ -15,11 +15,13 @@ export class MoreDropdownPage {
             exact: true
         });
 
-        this.sellerOption = page.getByRole('link', {
-            name: 'Become a Seller',
-            exact: true
-        });
-    }
+     this.becomeSeller = page.getByText(
+    'Seller',
+    { exact: true }
+
+    );
+}
+
 
     async openFlipkart() {
 
@@ -56,18 +58,18 @@ export class MoreDropdownPage {
 
     async verifyBecomeSeller() {
 
-        await expect(this.sellerOption).toBeVisible();
+        await expect(this.becomeSeller).toBeVisible();
 
         console.log('Become a Seller option is visible');
 
-        await expect(this.sellerOption).toBeEnabled();
+        await expect(this.becomeSeller).toBeEnabled();
 
         console.log('Become a Seller option is enabled');
     }
 
     async clickBecomeSeller() {
 
-        await this.sellerOption.click();
+        await this.becomeSeller.click();
 
         console.log('Clicked Become a Seller');
     }
